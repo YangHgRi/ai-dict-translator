@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Translator + MDX Dictionary",
+  "name": "AI Translator",
   "version": "0.1",
-  "description": "Translate selected text and query MDX dictionary",
+  "description": "Translate selected text and query AI",
   "permissions": ["contextMenus", "storage", "scripting", "activeTab"],
   "host_permissions": ["<all_urls>"],
   "action": {
