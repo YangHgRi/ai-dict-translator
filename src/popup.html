@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Translator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h2>🔍 AI Translator + MDX</h2>
+  <input type="text" id="queryInput" placeholder="输入词语或句子..." />
+  <button id="translateBtn">翻译</button>
+
+  <div id="resultArea">
+    <h3>翻译结果</h3>
+    <p id="translationOutput">—</p>
+
+    <h3>词典解释</h3>
+    <p id="dictOutput">—</p>
+  </div>
+
+  <hr />
+  <label for="mdxUpload">📘 导入 MDX 词典：</label>
+  <input type="file" id="mdxUpload" accept=".mdx" />
+
+  <script src="config.js"></script>
+  <script src="translator.js"></script>
+  <script src="popup.js"></script>
+</body>
+
+</html>
