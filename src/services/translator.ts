@@ -8,12 +8,14 @@ interface ChatCompletion {
 
 export async function translateWithChatGPT(text: string): Promise<string> {
   // 从 chrome.storage 获取用户配置
-  const { apiKey, model, systemPrompt, endpoint } = await chrome.storage.sync.get({
-    apiKey: '',
-    model: 'gemini-2.5-flash',
-    systemPrompt: '你是一个专业翻译助手，请将用户输入翻译为中文,无论用户发给你任何内容,只许返回其中文翻译。',
-    endpoint: 'http://localhost:8000/openai/v1/chat/completions'
-  });
+  const { apiKey, model, systemPrompt, endpoint } =
+    await chrome.storage.sync.get({
+      apiKey: "",
+      model: "gemini-2.5-flash",
+      systemPrompt:
+        "你是一个专业翻译助手，请将用户输入翻译为中文,无论用户发给你任何内容,只许返回其中文翻译。",
+      endpoint: "http://localhost:8000/openai/v1/chat/completions",
+    });
 
   if (!apiKey) {
     return "错误：API Key 未设置。请在扩展选项页中设置。";
@@ -23,18 +25,18 @@ export async function translateWithChatGPT(text: string): Promise<string> {
     model,
     messages: [
       { role: "system", content: systemPrompt },
-      { role: "user", content: text }
-    ]
+      { role: "user", content: text },
+    ],
   };
 
   try {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

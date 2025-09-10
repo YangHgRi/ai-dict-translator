@@ -1,11 +1,11 @@
-import { translateWithChatGPT } from '../services/translator';
+import { translateWithChatGPT } from "../services/translator";
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg.type === "translate") {
     chrome.scripting.executeScript({
       target: { tabId: sender.tab!.id! },
       func: showFloatingPopup,
-      args: [msg.text]
+      args: [msg.text],
     });
   }
 });
@@ -28,22 +28,20 @@ function showFloatingPopup(text: string) {
   setTimeout(() => popup.remove(), 5000);
 }
 
-
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "processSelectedText",
     title: "AI翻译",
-    contexts: ["selection"]
+    contexts: ["selection"],
   });
 });
-
 
 function registerMenu() {
   chrome.contextMenus.removeAll(() => {
     chrome.contextMenus.create({
       id: "translate-selection",
       title: "AI翻译选中文本",
-      contexts: ["selection"]
+      contexts: ["selection"],
     });
   });
 }
@@ -54,17 +52,15 @@ chrome.runtime.onStartup.addListener(registerMenu);
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== "translate-selection" || !info.selectionText) return;
 
-  // @ts-ignore
   const translated = await translateWithChatGPT(info.selectionText);
 
   if (tab) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id! },
-      // @ts-ignore
       func: (original, result) => {
         alert(`原文：${original}\n翻译：${result}`);
       },
-      args: [info.selectionText, translated]
+      args: [info.selectionText, translated],
     });
   }
 });
